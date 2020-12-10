@@ -12,7 +12,7 @@ export default function useVisualMode(initial) {
     } else {
       history.push(newMode);
       setMode(history[history.length - 1]);
-    }3
+    }
   };
 
   const back = function() {
