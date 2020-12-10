@@ -59,7 +59,7 @@ export default function Application(props) {
     const URL = `http://localhost:8001/api/days`;
 
     axios.get(URL)
-      .then(res => setDays([...res.data]))
+      .then(res => setDays(res.data))
       .catch(err => console.error(err));
   }, []);
 
@@ -74,7 +74,7 @@ export default function Application(props) {
         />
         <hr className="sidebar__seperator sidebar--centered" />
         <nav className="sidebar__menu">
-        <DayList days={state.days} day={state.day} setDay={setDays} />
+        <DayList days={state.days} day={state.day} setDay={setDay} />
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"
