@@ -1,25 +1,27 @@
 export function getAppointmentsForDay(state, day) {
   const { days, appointments } = state;
-  let currentDay;
+  let forDay;
   let results = [];
 
   for (const d of days) {
     if (d.name === day) {
-      currentDay = d.appointments;
+      forDay = d.appointments;
     }
   }
 
-  if (!currentDay) {
+  if (!forDay) {
     return results;
   }
 
   for (const a in appointments) {
-    if (currentDay.includes(appointments[a].id)) {
+    if (forDay.includes(appointments[a].id)) {
       results.push(appointments[a]);
     }
   }
   return results;
 };
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~ getInterview ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 export function getInterview(state, interview) {
   if (!interview) {
@@ -41,4 +43,29 @@ export function getInterview(state, interview) {
     }
   }
   return resultInterview;
+};
+
+// ~~~~~~~~~~~~~~~~~~~~ getInterviewersForDay ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+export function getInterviewersForDay(state, day) {
+  const { days, interviewers } = state;
+  let forDay;
+  let results = [];
+
+  for (const d of days) {
+    if (d.name === day) {
+      forDay = d.interviewers;
+    }
+  }
+
+  if (!forDay) {
+    return results;
+  }
+
+  for (const i in interviewers) {
+    if (forDay.includes(interviewers[i].id)) {
+      results.push(interviewers[i]);
+    }
+  }
+  return results;
 };
