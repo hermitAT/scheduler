@@ -5,6 +5,7 @@ import "components/Application.scss";
 
 import DayList from "./DayList";
 import Appointment from "components/Appointment";
+import getAppointmentsForDay from "helpers/selectors";
 
 
 export default function Application(props) {
@@ -14,16 +15,16 @@ export default function Application(props) {
     appointments: {}
   });
 
-  const dailyAppointments = [];
+  const dailyAppointments = getAppointmentsForDay(state, state.day);
 
   const setDay = day => setState({ ...state, day });
-  const setDays = days => setState(prev => ({ ...prev, days }));
 
   useEffect(() => {
-    const URL = `http://localhost:8001/api/days`;
-
-    axios.get(URL)
-      .then(res => setDays(res.data))
+    const URL = `http://localhost:8001/api/`;
+    Promise.all([
+      axios.get(`${URL}days`),
+      axios.get(`${URL}appointments`),
+    ]).then(all => setState(prev => ({ ...prev, days: all[0].data, appointments: all[1].data })))
       .catch(err => console.error(err));
   }, []);
 
