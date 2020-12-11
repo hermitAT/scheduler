@@ -7,7 +7,6 @@ import DayList from "./DayList";
 import Appointment from "components/Appointment";
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 
-
 export default function Application(props) {
   const [state, setState] = useState({
     day: "Monday",
@@ -44,6 +43,7 @@ export default function Application(props) {
       />
     );
   });
+
 
   return (
     <main className="layout">
