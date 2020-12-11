@@ -9,7 +9,7 @@ import Empty from "./Empty";
 import Show from "./Show";
 import Form from "./Form";
 // import Confirm from "./Confirm";
-// import Status from "./Status";
+import Status from "./Status";
 // import Error from "./Error";
 
 
@@ -20,7 +20,7 @@ export default function Appointment(props) {
   const SHOW = "SHOW";
   const CREATE = "FORM";
   // const CONFIRM = "CONFIRM";
-  // const STATUS = "STATUS";
+  const SAVING = "STATUS";
   // const ERROR = "ERROR";
 
   const { mode, transition, back } = useVisualMode(
@@ -32,6 +32,7 @@ export default function Appointment(props) {
       student: name,
       interviewer
     };
+    transition(SAVING, true);
     props.bookInterview(props.id, interview)
       .then(() => transition(SHOW));
     
@@ -53,6 +54,9 @@ export default function Appointment(props) {
           onCancel={() => back()}
           onSave={save}
         />
+      )}
+      {mode === SAVING && (
+        <Status message="Saving..." />
       )}
     </article>
   );
