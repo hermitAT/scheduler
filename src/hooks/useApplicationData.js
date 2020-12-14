@@ -62,13 +62,14 @@ export default function useApplicationData() {
       axios.get(`${URL}interviewers`)
     ]).then(all => dispatch({ type: SET_APPLICATION_DATA, days: all[0].data, appointments: all[1].data, interviewers: all[2].data }))
     .catch(err => console.error(err));
-  }, []);
+  }, [state.appointments]);
 
   const bookInterview = function(id, interview) {
     
     return axios.put(`/api/appointments/${id}`, { interview })
       .then(() => {
-        dispatch({ type: SET_INTERVIEW, id, interview})
+        dispatch({ type: SET_INTERVIEW, id, interview});
+
       });
   };
   
@@ -76,7 +77,7 @@ export default function useApplicationData() {
 
     return axios.delete(`/api/appointments/${id}`)
       .then(() => {
-        dispatch({ type: SET_INTERVIEW, id, interview: null})
+        dispatch({ type: SET_INTERVIEW, id, interview: null});
       });
   }
 
