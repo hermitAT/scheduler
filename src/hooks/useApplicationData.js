@@ -29,11 +29,8 @@ function reducer(state, action) {
         ...state.appointments,
         [action.id]: appointment
       };
-      
-
-
       return { ...state, appointments: appointments };
-    };
+    }
 
     default:
       throw new Error(
@@ -69,7 +66,6 @@ export default function useApplicationData() {
     return axios.put(`/api/appointments/${id}`, { interview })
       .then(() => {
         dispatch({ type: SET_INTERVIEW, id, interview});
-
       });
   };
   
