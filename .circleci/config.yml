@@ -18,21 +18,23 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: npm test
-deploy:
-  machine:
-    enabled: true
 
-  working_directory: ~/client
+  deploy:
+    machine:
+      enabled: true
 
-  steps:
-    - add_ssh_keys:
-        fingerprints:
-          - "cc:a9:1b:5b:70:7e:fa:c3:6c:45:79:33:11:3a:c1:91"
-    - checkout
-    - run:
-        name: Push Master to Production
-        command: |
-          git push https://github.com/hermitAT/scheduler.git master:production
+    working_directory: ~/client
+
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "cc:a9:1b:5b:70:7e:fa:c3:6c:45:79:33:11:3a:c1:91"
+      - checkout
+      - run:
+          name: Push Master to Production
+          command: |
+            git push https://github.com/hermitAT/scheduler.git master:production
+
 workflows:
   version: 2
   test_and_deploy:
