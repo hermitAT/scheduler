@@ -78,7 +78,7 @@ export default function Appointment(props) {
       )}
       {mode === CONFIRM && (
         <Confirm
-          message={"This action will remove the appointment from the system. Are you sure you want to proceed?"}
+          message={"Deletion is permanent. Are you sure you want to proceed?"}
           onCancel={() => back()}
           onConfirm={() => deleteInterview()}
         />
