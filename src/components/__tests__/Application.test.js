@@ -119,6 +119,8 @@ describe("Application", () => {
     expect(getByText(appointment, "Saving...")).toBeInTheDocument();
 
     await waitForElement(() => getByText(appointment, "Could not save appointment."));
+
+    fireEvent.click(getByAltText(appointment, "Close"));
   });
 
   it("shows the delete error when failing to delete an existing appointment", async () => {
@@ -135,10 +137,20 @@ describe("Application", () => {
 
     expect(getByText(appointment, "Deletion is permanent. Are you sure you want to proceed?")).toBeInTheDocument();
 
+    fireEvent.click(getByText(appointment, "Cancel"));
+
+    expect(getByText(appointment, "Archie Cohen")).toBeInTheDocument();
+
+    fireEvent.click(queryByAltText(appointment, "Delete"));
+
+    expect(getByText(appointment, "Deletion is permanent. Are you sure you want to proceed?")).toBeInTheDocument();
+
     fireEvent.click(getByText(appointment, "Confirm"));
 
     expect(getByText(appointment, "Deleting...")).toBeInTheDocument();
 
     await waitForElement(() => getByText(appointment, "Could not delete appointment."));
+
+    fireEvent.click(getByAltText(appointment, "Close"));
   });
 });
