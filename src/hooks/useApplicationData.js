@@ -20,15 +20,6 @@ function reducer(state, action) {
       };
 
     case SET_INTERVIEW: {
-      const days = state.days.map(day => {
-        if (action.interview && day.appointments.includes(action.id)) {
-          day.spots--;
-        } else if (!action.interview && day.appointments.includes(action.id)) {
-          day.spots++;
-        }
-        return day;
-      });
-
       const appointment = {
         ...state.appointments[action.id],
         interview: { ...action.interview }
@@ -37,9 +28,21 @@ function reducer(state, action) {
         ...state.appointments,
         [action.id]: appointment
       };
-      return { ...state, days: days, appointments: appointments};
-      
-      
+      const tempState = { ...state, appointments: appointments};
+
+      const currentDay = tempState.days.find(day => day.appointments.includes(action.id));
+      const spots = currentDay.appointments.filter(a => !tempState.appointments[a].interview);
+      if (!action.interview) {
+        spots.push(action.id);
+      }
+      const days = tempState.days.map(day => {
+        if (day.name === currentDay.name) {
+          return { ...day, spots: spots.length };
+        } else {
+          return { ...day };
+        }
+      });
+      return { ...tempState, days: days };
     }
 
     default:
