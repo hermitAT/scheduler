@@ -61,7 +61,7 @@ describe("Form", () => {
     fireEvent.click(getByText("Save"));
   
     expect(onSave).toHaveBeenCalledTimes(1);
-    expect(onSave).toHaveBeenCalledWith("Lydia Miller-Jones", null);
+    expect(onSave).toHaveBeenCalledWith("Lydia Miller-Jones", 1);
   });
 
   it("calls onCancel and resets the input field", () => {
