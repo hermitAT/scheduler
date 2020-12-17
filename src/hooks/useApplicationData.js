@@ -11,8 +11,7 @@ export default function useApplicationData() {
     day: "Monday",
     days: [],
     appointments: {},
-    interviewers: {},
-    update: 0
+    interviewers: {}
   });
 
   const setDay = (day) => { dispatch({ type: SET_DAY, day }) };
@@ -25,7 +24,7 @@ export default function useApplicationData() {
       axios.get(`/api/interviewers`)
     ]).then(all => dispatch({ type: SET_APPLICATION_DATA, all }))
     .catch(err => console.error(err));
-  }, [state.update]);
+  }, []);
   // retrieve all the data from API, use the reducer to apply logic
 
   const bookInterview = function(id, interview) {
