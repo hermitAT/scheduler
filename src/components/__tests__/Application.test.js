@@ -36,15 +36,15 @@ describe("Application", () => {
     fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
       target: { value: "Lydia Miller-Jones" }
     });
-  
     fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
+
     fireEvent.click(getByText(appointment, "Save"));
   
     expect(getByText(appointment, "Saving...")).toBeInTheDocument();
   
     await waitForElement(() => getByText(appointment, "Lydia Miller-Jones"));
 
-    expect(getByText(day, "no spots remaining")).toBeInTheDocument();
+    await waitForElement(() => (getByText(day, "no spots remaining")));
   });
   
   it("loads data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
@@ -69,7 +69,7 @@ describe("Application", () => {
     const day = getAllByTestId(container, "day").find(day =>
       queryByText(day, "Monday")
     );
-    expect(getByText(day, "2 spots remaining")).toBeInTheDocument();
+    await waitForElement(() => (getByText(day, "2 spots remaining")));
   });
 
   it("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
@@ -97,7 +97,7 @@ describe("Application", () => {
     const day = getAllByTestId(container, "day").find(day =>
       queryByText(day, "Monday")
     );
-    expect(getByText(day, "1 spot remaining")).toBeInTheDocument();
+    await waitForElement(() => (getByText(day, "1 spot remaining")));
   });
 
   it("shows the save error when failing to save an appointment", async () => {
