@@ -1,3 +1,5 @@
+
+// fixtures contains mock data to be used within our mock GET, PUT and DELETE requests
 const fixtures = {
   days: [
     {
@@ -54,6 +56,8 @@ const fixtures = {
 };
 
 export default {
+
+  // use jest's fn to act as an API to handle requests, returning data from the fixtures
   get: jest.fn(url => {
     if (url === "/api/days") {
       return Promise.resolve({

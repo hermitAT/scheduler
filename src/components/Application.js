@@ -29,7 +29,9 @@ export default function Application(props) {
       />
     );
   });
-
+  // within each appointment article, pass all of the props to be used by the rest of the components within this block of JSX
+  // the day is set within the DayList below, but otherwise all props are passed thru the Appointment component
+  
   return (
     <main className="layout">
       <section className="sidebar">

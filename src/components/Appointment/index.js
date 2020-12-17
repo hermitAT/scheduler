@@ -23,10 +23,12 @@ export default function Appointment(props) {
   const DELETE = "DELETE";
   const ERROR_SAVE = "ERROR_SAVE";
   const ERROR_DELETE = "ERROR_DELETE";
+  // variables to help switch between modes
 
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
     );
+  // bring in the return from useVisualMode to switch components within the appointment article
 
   const save = function(name, interviewer) {
     const interview = {
@@ -38,6 +40,7 @@ export default function Appointment(props) {
       .then(() => transition(SHOW))
       .catch(e => transition(ERROR_SAVE, true));
   };
+  // save an appointment, creating a new interview object and then bookInterview. once complete, transition to the correct mode
 
   const deleteInterview = function(id) {
     transition(DELETE, true);
@@ -45,7 +48,8 @@ export default function Appointment(props) {
       .then(() => transition(EMPTY))
       .catch(e => transition(ERROR_DELETE, true));
   };
-  
+  // remove the interview from the database using the props.fn from the index, and transition to the correct mode
+
   return (
     <article className="appointment" data-testid="appointment">
       <Header time={props.time} />

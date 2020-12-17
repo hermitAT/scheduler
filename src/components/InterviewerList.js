@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import InterviewerListItem from "components/InterviewerListItem";
 import "components/InterviewerList.scss"
 
+// pass the data from state.interviewers to be used within each interviewer list used within the form
 function InterviewerList(props) {
   const list = props.interviewers.map((i) => {
     return (

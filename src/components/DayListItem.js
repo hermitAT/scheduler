@@ -18,6 +18,8 @@ export default function DayListItem(props) {
     }
     return "no spots remaining";
   }
+  // apply classes above, and format the props.spots to be used within each DayListItem
+  // before returning the JSX to get rendered.
 
   return (
     <li className={listClass} onClick={props.setDay} data-testid="day" >

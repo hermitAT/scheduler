@@ -19,6 +19,8 @@ describe("Application", () => {
   });
 
   it("loads data, books an interview and reduces the spots remaining for Monday by 1", async () => {
+    // logic from this test is used in all remaining tests -> use getBy queries to find specific parts of the app and fireEvents
+    // OR change inputs, and set expectations for the next component to appear after an event is fired.
     const { container } = render(<Application />);
   
     await waitForElement(() => getByText(container, "Archie Cohen"));
@@ -46,6 +48,7 @@ describe("Application", () => {
   });
   
   it("loads data, cancels an interview and increases the spots remaining for Monday by 1", async () => {
+    // reverse logic from the test for adding a new appointment, with coverage for the Confirm component added
     const { container } = render(<Application />);
 
     await waitForElement(() => getByText(container, "Archie Cohen"));
@@ -70,6 +73,8 @@ describe("Application", () => {
   });
 
   it("loads data, edits an interview and keeps the spots remaining for Monday the same", async () => {
+    // logic used to ensure ALL expected outcomes are hit, most notably the updating spots
+    // updating spots is the expectation that is different adding a new appoint., since they both use same dispatch
     const { container } = render(<Application />);
   
     await waitForElement(() => getByText(container, "Archie Cohen"));
@@ -80,11 +85,9 @@ describe("Application", () => {
     fireEvent.click(queryByAltText(appointment, "Edit"));
 
     expect(getByPlaceholderText(appointment, /enter student name/i)).toHaveValue("Archie Cohen");
-
     fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
       target: { value: "Adam Thorne" }
     });
-
     fireEvent.click(getByText(appointment, "Save"));
 
     expect(getByText(appointment, "Saving...")).toBeInTheDocument();
@@ -98,6 +101,8 @@ describe("Application", () => {
   });
 
   it("shows the save error when failing to save an appointment", async () => {
+    // increase testing coverage, using axios mock to send error to server
+    // same testing logic as a successful add, but add coverage to lines specific to the Error component
     axios.put.mockRejectedValueOnce();
 
     const { container } = render(<Application />);
@@ -124,6 +129,7 @@ describe("Application", () => {
   });
 
   it("shows the delete error when failing to delete an existing appointment", async () => {
+    // apply similar testing structure as a successful deletion, but interact with the error window and test all lines
     axios.delete.mockRejectedValueOnce();
 
     const { container } = render(<Application />);
@@ -136,15 +142,13 @@ describe("Application", () => {
     fireEvent.click(queryByAltText(appointment, "Delete"));
 
     expect(getByText(appointment, "Deletion is permanent. Are you sure you want to proceed?")).toBeInTheDocument();
-
     fireEvent.click(getByText(appointment, "Cancel"));
+    // ^^ increase test coverage by firing an event to test if the 'cancel' button works...
 
     expect(getByText(appointment, "Archie Cohen")).toBeInTheDocument();
-
     fireEvent.click(queryByAltText(appointment, "Delete"));
 
     expect(getByText(appointment, "Deletion is permanent. Are you sure you want to proceed?")).toBeInTheDocument();
-
     fireEvent.click(getByText(appointment, "Confirm"));
 
     expect(getByText(appointment, "Deleting...")).toBeInTheDocument();

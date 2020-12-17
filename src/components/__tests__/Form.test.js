@@ -26,6 +26,7 @@ describe("Form", () => {
   });
 
   it("validates that the student name is not blank", () => {
+    // onSave and onCancel (used below) are mocked using jest and passed as props, same as a the dummy data for interviewers
     const onSave = jest.fn();
 
     const { getByText } = render( <Form interviewers={interviewers} onSave={onSave} />);

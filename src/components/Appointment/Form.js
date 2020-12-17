@@ -18,6 +18,7 @@ export default function Form(props) {
     reset();
     props.onCancel();
   }
+  // reset form, and call the props.onCancel
 
   const validate = function() {
     if (name === "") {
@@ -27,6 +28,7 @@ export default function Form(props) {
     setError("");
     props.onSave(name, interviewer);
   }
+  // offer validation to our form, ensuring the student name cannot be blank.
   
   
   return (
