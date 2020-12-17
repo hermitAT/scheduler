@@ -26,24 +26,11 @@ export default function reducer(state, action) {
         ...state.appointments,
         [action.id]: appointment
       };
-      const tempState = { ...state, appointments: appointments};
-      // create new state with the updated appointment
-      // use that data to find the new value for spots
-
-      const currentDay = tempState.days.find(day => day.appointments.includes(action.id));
-      const spots = currentDay.appointments.filter(a => !tempState.appointments[a].interview);
-      if (!action.interview) {
-        spots.push(action.id);
-      }
-      // encountered a bit of an issue, so used the above 'push' as a work-around
-      const days = tempState.days.map(day => {
-        if (day.name === currentDay.name) {
-          return { ...day, spots: spots.length };
-        } else {
-          return { ...day };
-        }
-      });
-      return { ...tempState, days: days };
+      // using a bit of a workaround in order to update the counter, using a special value within state that is changed on every SET_INTERVIEW dispatch
+      // this property of state is the condition related to our useEffect, so we are able to refresh all the API data
+      // after every change to the appointments. This feels efficient although I am still looking into how that pressure could affect the server..
+      const update = { ...state.update++ };
+      return { ...state, appointments: appointments, update: update};
     }
 
     default:
